@@ -1,7 +1,7 @@
-import React, {useState, useEffect} from "react"
+import React, {useState, useEffect, useDebugValue} from "react"
 // import {useCart} from "react-use-cart"
 import data from "./data"
-import img1 from './img/img1.png'
+
 
 
 
@@ -16,51 +16,117 @@ const Cart=()=> {
 // removeItem,
 // emptyCart } = useCart()
 const [totalItems, setTotal]=useState(data)
-const [Grapesquantity ,setGarapes]=useState(0)
-const [Melonsquantity ,setMelons]=useState(0)
-const [Orangequantity ,setOrange]=useState(0)
+console.log(totalItems)
 
-useEffect(()=>{
-    if(totalItems.length !==0) {
-const grapes = totalItems.products.filter((item)=>{
-  return  item.id === 1
+const [Grapesquantity ,setGarapes]=useState(data[0].quantity)
+const [Melonsquantity ,setMelons]=useState(data[1].quantity)
+const [Orangequantity ,setOrange]=useState(data[2].quantity)
+
+const addItem = (id) =>{
+ 
+  const upadatedItems =totalItems
+  if(id===1){
+ var addedG =  upadatedItems[0].quantity + 1
+ upadatedItems[0].quantity =addedG
+ setGarapes( addedG)
 }
-)
-setGarapes(grapes.length)
+else if(id===2){
+  var addedM = upadatedItems[1].quantity + 1
+  upadatedItems[1].quantity =addedM
+  setMelons( addedM)
+}
+else if(id===3){
+ var addedO = upadatedItems[2].quantity + 1
+ upadatedItems[2].quantity =addedO
+ setOrange( addedO)
+}
+else{
+  return
+}
 
-const melobs = totalItems.products.filter((item)=>{
-    return  item.id === 2
-  })
-  setMelons(melobs.length)
+}
 
-  const oranges = totalItems.products.filter((item)=>{
-    return  item.id === 3
-  })
-setOrange(oranges.length)
+
+const deleteItem = (id) =>{
+  const upadatedItems =totalItems
+  if(id===1){
+    if(upadatedItems[0].quantity > 0){
+ var addedG =  upadatedItems[0].quantity - 1
+ upadatedItems[0].quantity =addedG
+ setGarapes( addedG)
     }
-
-},[])
-
-
-
-
- const addItem = (id) =>{
-     const upadatedItems = totalItems
-     if(id===1){
-       upadatedItems.push( {
-        id :1 ,
-        img : img1,
-      title : "Grapes",
-        desc : "",
-        price : "47 Rs" 
-
-    })  
-       setTotal(upadatedItems)
-     }
-   
-
+}
+else if(id===2){
+  if(upadatedItems[1].quantity > 0){
+  var addedM = upadatedItems[1].quantity - 1
+  upadatedItems[1].quantity =addedM
+  setMelons( addedM)
+  }
+}
+else if(id===3){
+  if(upadatedItems[2].quantity > 0){
+ var addedO = upadatedItems[2].quantity - 1
+ upadatedItems[2].quantity =addedO
+ setOrange( addedO)
+  }
+}
+else{
+  return
+}
 
 }
+
+const removeItem = (id) =>{
+  const upadatedItems = totalItems
+
+  if(id===1){
+upadatedItems[0].quantity = 0
+setGarapes(upadatedItems[0].quantity)
+  }
+ else if(id===2){
+    upadatedItems[1].quantity = 0
+    setMelons(upadatedItems[1].quantity)
+      }
+     else if(id===3){
+        upadatedItems[2].quantity = 0
+        setOrange(upadatedItems[2].quantity)
+          }
+          else{
+            return
+          }
+
+}
+
+
+// useEffect(() => {
+//     if(totalItems.length !==0) {
+
+//       const grapes = totalItems.filter((item)=>{
+//         return  item.id === 1
+//       }
+//       )
+      
+//       setGarapes(grapes.length)
+// const melobs = totalItems.filter((item)=>{
+//     return  item.id === 2
+//   })
+//   setMelons(melobs.length)
+
+//   const oranges = totalItems.filter((item)=>{
+//     return  item.id === 3
+//   })
+// setOrange(oranges.length)
+//     }
+
+// },[])
+
+
+
+
+
+
+
+
 
 if (totalItems.length===0) return <h1 className="text-center">Your Cart Is Empty</h1>
   
@@ -69,9 +135,9 @@ if (totalItems.length===0) return <h1 className="text-center">Your Cart Is Empty
       <section className="py-4 container">
     <div className="row-justify-content-center">
         <div className="col-12">
-            <h5> Total items : ({totalItems.products.length})</h5>
+            
             <table className="table table-light table-hover m-0">
-                {totalItems.products.map((item,index)=>{
+                {data.map((item,index)=>{
                     return(
                     <tr key={index}>
                         <td>
@@ -85,12 +151,12 @@ if (totalItems.length===0) return <h1 className="text-center">Your Cart Is Empty
                         {item.title === "Orange" ? (`Quantity(${Orangequantity})`) : null } </td>
                         <td>
                         
-                            {/* <button
-                            className="btn btn-info ms-2" onClick={()=>{deleteItem(item.id)}}>-</button> */}
+                             <button
+                            className="btn btn-info ms-2" onClick={()=>{deleteItem(item.id)}}>-</button> 
                              <button
                             className="btn btn-info ms-2" onClick={()=>{addItem(item.id)}}>+</button>
-                             {/* <button
-                            className="btn btn-info ms-2" onClick={() =>{removeItem(item.id)}}>Remove Item</button> */}
+                              <button
+                            className="btn btn-info ms-2" onClick={() =>{removeItem(item.id)}}>Remove Item</button> 
                         </td>
                         </tr>)
 

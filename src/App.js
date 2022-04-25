@@ -13,8 +13,9 @@ function App() {
 
   return (
     
-    <div >
+    <div className="container" >
       <table >
+        <tbody>
         <tr>
           <td>
       <Home />
@@ -23,6 +24,7 @@ function App() {
       <Cart  />
       </td>
         </tr>
+        </tbody>
       </table>
     </div>
     

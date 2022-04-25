@@ -14,7 +14,7 @@ function Home() {
      <h1 className="text-center">All items</h1>
      <section className="container">
          <div className="row justify-content-center">
-             {data.products.map((item,index) =>{
+             {data.map((item,index) =>{
                  return(
                      
                     
